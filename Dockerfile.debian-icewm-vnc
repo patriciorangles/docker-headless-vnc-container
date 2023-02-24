@@ -40,7 +40,7 @@ RUN $INST_SCRIPTS/tools.sh
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 ### Configure sudo
-RUN $INST_SCRIPTS/sudo.sh $USER_NAME $HOME
+RUN $INST_SCRIPTS/config_sudo.sh $USER_NAME $HOME
 
 ### Install custom fonts
 RUN $INST_SCRIPTS/install_custom_fonts.sh

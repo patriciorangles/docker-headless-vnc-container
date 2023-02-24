@@ -2,3 +2,4 @@ prog xterm xterm xterm
 separator
 prog Firefox /usr/lib/firefox/browser/icons/mozicon128.png firefox
 prog "Google Chrome" /usr/share/pixmaps/chromium-browser.png /usr/bin/chromium-browser
+prog "VS Code" /usr/share/code/resources/app/resources/linux/code.png /usr/share/code/bin/code --no-sandbox /opt/odoo

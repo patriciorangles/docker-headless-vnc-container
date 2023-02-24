@@ -38,10 +38,8 @@ ADD ./src/debian/install/ $INST_SCRIPTS/
 
 ### Install some common tools
 RUN $INST_SCRIPTS/tools.sh
-ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
-
-### Configure sudo
-RUN $INST_SCRIPTS/config_sudo.sh $USER_NAME $HOME
+ENV LANG='es_ES.UTF-8' LANGUAGE='es_ES:es' LC_ALL='es_ES.UTF-8'
+#ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 ### Install custom fonts
 RUN $INST_SCRIPTS/install_custom_fonts.sh
@@ -57,6 +55,12 @@ RUN $INST_SCRIPTS/chrome.sh
 ### Install IceWM UI
 RUN $INST_SCRIPTS/icewm_ui.sh
 ADD ./src/debian/icewm/ $HOME/
+
+### Install VSC
+RUN $INST_SCRIPTS/VSC_install.sh
+
+### Configure sudo
+RUN $INST_SCRIPTS/config_sudo.sh $USER_NAME $HOME
 
 ### configure startup
 RUN $INST_SCRIPTS/libnss_wrapper.sh

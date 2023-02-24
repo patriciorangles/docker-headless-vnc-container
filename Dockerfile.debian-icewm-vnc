@@ -59,6 +59,9 @@ ADD ./src/debian/icewm/ $HOME/
 ### Install VSC
 RUN $INST_SCRIPTS/VSC_install.sh
 
+### Install PostgreSQL
+RUN $INST_SCRIPTS/postgresql_install.sh
+
 ### Configure sudo
 RUN $INST_SCRIPTS/config_sudo.sh $USER_NAME $HOME
 

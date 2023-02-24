@@ -2,8 +2,7 @@
 
 FROM debian:11
 
-MAINTAINER Sven Nierlein "sven@consol.de"
-ENV REFRESHED_AT 2023-01-27
+ENV REFRESHED_AT 2023-02-24
 
 LABEL io.k8s.description="Headless VNC Container with IceWM window manager, firefox and chromium" \
       io.k8s.display-name="Headless VNC Container based on Debian" \
@@ -39,6 +38,9 @@ ADD ./src/debian/install/ $INST_SCRIPTS/
 ### Install some common tools
 RUN $INST_SCRIPTS/tools.sh
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
+### Configure sudo
+RUN $INST_SCRIPTS/config_sudo.sh
 
 ### Install custom fonts
 RUN $INST_SCRIPTS/install_custom_fonts.sh

@@ -3,5 +3,5 @@
 set -e
 
 echo "Installing ttf-wqy-zenhei"
-apt-get install -y ttf-wqy-zenhei
+apt-get install -y --no-install-recommends ttf-wqy-zenhei
 apt-get clean -y

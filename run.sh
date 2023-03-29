@@ -81,4 +81,4 @@ fi
 
 echo "Se levanta el conetendor ${contenedor} desde la imagen  ${image_tag} en el puerto ${port}"
 #docker run --name debian-icewm-vnc -d -p 25901:5901 -p 25900:6901 debian-icewm-vnc
-docker run --name ${contenedor} -d -p ${port}:6901 ${image_tag}
+docker run --privileged --name ${contenedor} -d -p ${port}:6901 ${image_tag}

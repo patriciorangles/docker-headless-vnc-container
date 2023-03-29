@@ -32,5 +32,5 @@ else
     echo ${image_tag}
 fi
 
-docker build -t ${tag} -f ./Dockerfile.debian-icewm-vnc .
+docker build -t ${image_tag} -f ./Dockerfile.debian-icewm-vnc .
 

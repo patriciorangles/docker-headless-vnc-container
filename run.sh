@@ -75,8 +75,8 @@ if [ -z ${delete+x} ]; then
 	echo "En caso de existir el contenedor se lo preserva!"
 else
     echo "Se elimina el contenedor antes de lanzarlo: ${contenedor}"
-    docker stop -t 1 debian-icewm-vnc
-    docker rm debian-icewm-vnc
+    docker stop -t 1 ${contenedor}
+    docker rm ${contenedor}
 fi
 
 echo "Se levanta el conetendor ${contenedor} desde la imagen  ${image_tag} en el puerto ${port}"

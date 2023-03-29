@@ -11,7 +11,7 @@
 #	-c=,--contenedor= : nombre a usar para este contenedor, por defecto: debian-icewm-vnc
 #   -p=,--port=: Indica el nombre del puerto que se usara para el acceso web
 #   -d,--delete : indica si se debe o no eliminar el contenedor existente
-
+#   -P,--privileged : Indica que el contenedor se iniciara en modo privilegiado
 
 for i in "$@"
 do
@@ -34,6 +34,11 @@ case $i in
 
     -d|--delete)
     delete="SI"
+    shift # past argument=value
+    ;;
+
+    -P|--privileged)
+    privileged="--privileged"
     shift # past argument=value
     ;;
 
@@ -79,6 +84,15 @@ else
     docker rm ${contenedor}
 fi
 
+# Analisis del modo privileged
+if [ -z ${privileged+x} ]; then
+	echo "El contendor correra en modo SIN PRIVILEGIOS!"
+    privileged=""
+else
+    echo "El contenedor correra en modo PRIVILEGED"
+    privileged="--privileged"
+fi
+
 echo "Se levanta el conetendor ${contenedor} desde la imagen  ${image_tag} en el puerto ${port}"
 #docker run --name debian-icewm-vnc -d -p 25901:5901 -p 25900:6901 debian-icewm-vnc
-docker run --privileged --name ${contenedor} -d -p ${port}:6901 ${image_tag}
+docker run ${privileged} --name ${contenedor} -d -p ${port}:6901 ${image_tag}

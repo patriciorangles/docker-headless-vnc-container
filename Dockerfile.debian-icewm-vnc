@@ -2,8 +2,7 @@
 
 FROM debian:11
 
-MAINTAINER Sven Nierlein "sven@consol.de"
-ENV REFRESHED_AT 2023-01-27
+ENV REFRESHED_AT 2023-02-24
 
 LABEL io.k8s.description="Headless VNC Container with IceWM window manager, firefox and chromium" \
       io.k8s.display-name="Headless VNC Container based on Debian" \
@@ -29,7 +28,8 @@ ENV HOME=/headless \
     VNC_COL_DEPTH=24 \
     VNC_RESOLUTION=1280x1024 \
     VNC_PW=vncpassword \
-    VNC_VIEW_ONLY=false
+    VNC_VIEW_ONLY=false \
+    USER_NAME=dockeruser
 WORKDIR $HOME
 
 ### Add all install scripts for further steps
@@ -38,7 +38,8 @@ ADD ./src/debian/install/ $INST_SCRIPTS/
 
 ### Install some common tools
 RUN $INST_SCRIPTS/tools.sh
-ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+ENV LANG='es_ES.UTF-8' LANGUAGE='es_ES:es' LC_ALL='es_ES.UTF-8'
+#ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 ### Install custom fonts
 RUN $INST_SCRIPTS/install_custom_fonts.sh
@@ -54,6 +55,15 @@ RUN $INST_SCRIPTS/chrome.sh
 ### Install IceWM UI
 RUN $INST_SCRIPTS/icewm_ui.sh
 ADD ./src/debian/icewm/ $HOME/
+
+### Install VSC
+RUN $INST_SCRIPTS/VSC_install.sh
+
+### Install PostgreSQL
+RUN $INST_SCRIPTS/postgresql_install.sh
+
+### Configure sudo
+RUN $INST_SCRIPTS/config_sudo.sh $USER_NAME $HOME
 
 ### configure startup
 RUN $INST_SCRIPTS/libnss_wrapper.sh

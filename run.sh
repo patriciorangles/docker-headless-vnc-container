@@ -12,6 +12,7 @@
 #   -p=,--port=: Indica el nombre del puerto que se usara para el acceso web
 #   -d,--delete : indica si se debe o no eliminar el contenedor existente
 #   -P,--privileged : Indica que el contenedor se iniciara en modo privilegiado
+#   -v=,--VNCPASSW=: Indica el password con el que se podra acceder via VNC
 
 for i in "$@"
 do
@@ -39,6 +40,11 @@ case $i in
 
     -P|--privileged)
     privileged="--privileged"
+    shift # past argument=value
+    ;;
+
+    -v=*|--VNCPASSW=*)
+    VNCPASSW="${i#*=}"
     shift # past argument=value
     ;;
 
@@ -93,6 +99,15 @@ else
     privileged="--privileged"
 fi
 
-echo "Se levanta el conetendor ${contenedor} desde la imagen  ${image_tag} en el puerto ${port}"
+# Analisis del password
+if [ -z ${VNCPASSW+x} ]; then 
+    echo "Se usara el password por defecto: vncpasswPR"
+    VNCPASSW="vncpasswPR"
+else 
+    echo "Se usara el password indicado por linea de comandos:" 
+    echo ${VNCPASSW}
+fi
+
+echo "Se levanta el contendor ${contenedor} desde la imagen  ${image_tag} en el puerto ${port}"
 #docker run --name debian-icewm-vnc -d -p 25901:5901 -p 25900:6901 debian-icewm-vnc
-docker run ${privileged} --name ${contenedor} -d -p ${port}:6901 ${image_tag}
+docker run ${privileged} --name ${contenedor} -d -p ${port}:6901 -e VNC_PW=${VNCPASSW} ${image_tag}

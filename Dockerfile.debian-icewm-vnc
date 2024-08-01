@@ -2,7 +2,7 @@
 
 FROM debian:11
 
-ENV REFRESHED_AT 2023-02-24
+ENV REFRESHED_AT 2024-08-01
 
 LABEL io.k8s.description="Headless VNC Container with IceWM window manager, firefox and chromium" \
       io.k8s.display-name="Headless VNC Container based on Debian" \

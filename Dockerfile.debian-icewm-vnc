@@ -2,7 +2,7 @@
 
 FROM debian:11
 
-ENV REFRESHED_AT 2024-08-01
+ENV REFRESHED_AT="2024-08-01"
 
 LABEL io.k8s.description="Headless VNC Container with IceWM window manager, firefox and chromium" \
       io.k8s.display-name="Headless VNC Container based on Debian" \
@@ -69,6 +69,9 @@ RUN $INST_SCRIPTS/config_sudo.sh $USER_NAME $HOME
 RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
+
+## Carpeta compartida con el host
+RUN mkdir -p $HOME/host_volumen
 
 USER 1000
 

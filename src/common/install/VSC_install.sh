@@ -13,6 +13,6 @@ if [ "$arch_system" == "amd64" ]; then
 elif [ "$arch_system" == "arm64" ]; then
     #wget https://az764295.vo.msecnd.net/stable/441438abd1ac652551dbe4d408dfcec8a499b8bf/code_1.75.1-1675892106_arm64.deb \
     #&& apt-get update && apt-get install ./code_1.75.1-1675892106_arm64.deb libx11-xcb-dev libasound2 -f -y
-    wget https://vscode.download.prss.microsoft.com/dbazure/download/stable/b1c0a14de1414fcdaa400695b4db1c0799bc3124/code_1.92.0-1722471464_arm64.deb
+    wget https://vscode.download.prss.microsoft.com/dbazure/download/stable/b1c0a14de1414fcdaa400695b4db1c0799bc3124/code_1.92.0-1722471464_arm64.deb \
     && apt-get update && apt-get install ./code_1.92.0-1722471464_arm64.deb libx11-xcb-dev libasound2 -f -y
 fi

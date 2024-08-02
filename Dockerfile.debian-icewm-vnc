@@ -70,10 +70,10 @@ RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 
-## Carpeta compartida con el host
-RUN mkdir -p $HOME/host_volumen
-
 USER 1000
+
+## Carpeta compartida con el host con el usuario 1000
+RUN mkdir -p $HOME/host_volumen
 
 ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
 CMD ["--wait"]

@@ -13,6 +13,16 @@
 #   -d,--delete : indica si se debe o no eliminar el contenedor existente
 #   -P,--privileged : Indica que el contenedor se iniciara en modo privilegiado
 #   -v=,--VNCPASSW=: Indica el password con el que se podra acceder via VNC
+#   -s,--AUTO_START: Indica que autoiniciara en caso de que el servidor sea reiniciado
+#   -x=,--EXTRA_PARAM=: Parametros extras que se usaran ara el lanzamiento del contenedor
+#                       USAR CON CUIDADO, se lo envia directo al comando de docker!!
+#
+#   NOTA: la imagen tiene la carpeta /headless/host_volumen que puede ser usada para montar cualquier 
+#         carpeta del host dentro del contenedor, por ejemplo:
+#         el home del usuario -v $HOME:/headless/host_volumen
+#         la carpeta raiz del sistema -v /:/headless/host_volumen
+#
+#
 
 for i in "$@"
 do
@@ -45,6 +55,16 @@ case $i in
 
     -v=*|--VNCPASSW=*)
     VNCPASSW="${i#*=}"
+    shift # past argument=value
+    ;;
+
+    -s|--AUTO_START)
+    AUTOSTART="-d --restart unless-stopped"
+    shift # past argument=value
+    ;;
+
+    -x=*|--EXTRA_PARAM=*)
+    EXTRAPARAM="${i#*=}"
     shift # past argument=value
     ;;
 
@@ -108,6 +128,26 @@ else
     echo ${VNCPASSW}
 fi
 
+# Analisis del los parametros extras
+if [ -z ${EXTRAPARAM+x} ]; then 
+    echo "Sin parametros extras"
+    EXTRAPARAM=""
+else 
+    echo "Se usaran los siguientes parametros extras para iniciar docker:" 
+    echo ${EXTRAPARAM}
+fi
+
+# Analisis del los parametros extras
+if [ -z ${AUTOSTART+x} ]; then 
+    echo "Sin autoinicio para este contenedor"
+    AUTOSTART=""
+else 
+    echo "Se usara la opcion de auto inicio para este contenedor:" 
+    echo ${AUTOSTART}
+fi
+
 echo "Se levanta el contendor ${contenedor} desde la imagen  ${image_tag} en el puerto ${port}"
-#docker run --name debian-icewm-vnc -d -p 25901:5901 -p 25900:6901 debian-icewm-vnc
-docker run ${privileged} --name ${contenedor} -d -p ${port}:6901 -e VNC_PW=${VNCPASSW} ${image_tag}
+PARAMETROS="${AUTOSTART} ${privileged} --name ${contenedor} -d -p ${port}:6901 -e VNC_PW=${VNCPASSW} ${EXTRAPARAM} ${image_tag}"
+echo "Comando a ejecutar:"
+echo "docker run ${PARAMETROS}"
+docker run ${PARAMETROS}

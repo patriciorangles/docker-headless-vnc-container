@@ -4,6 +4,8 @@ FROM debian:11
 
 ENV REFRESHED_AT="2024-08-01"
 
+ENV USER_ID=1000
+
 LABEL io.k8s.description="Headless VNC Container with IceWM window manager, firefox and chromium" \
       io.k8s.display-name="Headless VNC Container based on Debian" \
       io.openshift.expose-services="6901:http,5901:xvnc" \
@@ -62,15 +64,15 @@ RUN $INST_SCRIPTS/VSC_install.sh
 ### Install PostgreSQL
 RUN $INST_SCRIPTS/postgresql_install.sh
 
-### Configure sudo
-RUN $INST_SCRIPTS/config_sudo.sh $USER_NAME $HOME
+### Configure sudo (problemas con nombre de usuario, se cambia a id de usuario)
+RUN $INST_SCRIPTS/config_sudo.sh $USER_ID $HOME
 
 ### configure startup
 RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 
-USER 1000
+USER $USER_ID
 
 ## Carpeta compartida con el host con el usuario 1000
 RUN mkdir -p $HOME/host_volumen

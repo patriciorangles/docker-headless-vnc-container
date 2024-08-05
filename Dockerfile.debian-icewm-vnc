@@ -43,6 +43,9 @@ RUN $INST_SCRIPTS/tools.sh
 ENV LANG='es_ES.UTF-8' LANGUAGE='es_ES:es' LC_ALL='es_ES.UTF-8'
 #ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
+### Configure terminator
+RUN $INST_SCRIPTS/config_terminator.sh
+
 ### Install custom fonts
 RUN $INST_SCRIPTS/install_custom_fonts.sh
 

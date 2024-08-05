@@ -17,10 +17,15 @@ fi
 
 echo "User name found: $USER_NAME"
 
-# create user
-adduser --home "$HOME" --disabled-password --gecos '' "$USER_NAME"
+# Check if user already exists
+if id "$USER_NAME" &>/dev/null; then
+    echo "User $USER_NAME already exists."
+else
+    # create user
+    adduser --home "$HOME" --disabled-password --gecos '' "$USER_NAME"
+fi
+
 # add user to group sudo
 adduser "$USER_NAME" sudo
 # add permissions to sudoers file
 echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-

@@ -16,15 +16,3 @@ elif [ "$arch_system" == "arm64" ]; then
     wget https://vscode.download.prss.microsoft.com/dbazure/download/stable/b1c0a14de1414fcdaa400695b4db1c0799bc3124/code_1.92.0-1722471464_arm64.deb \
     && apt-get update && apt-get install ./code_1.92.0-1722471464_arm64.deb libx11-xcb-dev libasound2 -f -y
 fi
-
-# Instalacion de extensiones para VSCode
-echo "Instalamos las extensiones de VSCode"
-echo "ms-ceintl.vscode-language-pack-es"
-code --install-extension ms-ceintl.vscode-language-pack-es #Idioma ES
-echo "ms-python.vscode-pylance"
-code --install-extension ms-python.vscode-pylance #Manejo de python
-echo "ms-python.python"
-code --install-extension ms-python.python #Manejo de python
-echo "ms-python.debugpy"
-code --install-extension ms-python.debugpy #Depuracion de python
-

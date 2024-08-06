@@ -29,3 +29,7 @@ fi
 adduser "$USER_NAME" sudo
 # add permissions to sudoers file
 echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+# Se modifica el shell del usuario, suele venir sin un shell valido
+echo "Modificando el shell del User ID: $USER_ID"
+usermod -s /bin/bash $(getent passwd $USER_ID | cut -d: -f1)
